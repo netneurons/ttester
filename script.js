@@ -4,7 +4,11 @@ function send(){
   var d= new Date();
   var date = d.toTimeString();
   var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm">'+ msg +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div></div>';
+  if(parent.textContent === 'Nothing Here, write new message.'){
+  parent.innerHTML=inner
+  }else{
   parent.innerHTML+=inner;
+  }
   document.querySelector('input').value = '';
   var uall = [];
   var message = {
@@ -28,7 +32,7 @@ document.querySelector('input').addEventListener('keydown', function(event) {
     send()
   }
 });
-var p = document.querySelector('.eff');
+var p = document.querySelectorAll('div')[1];
 if(p.innerHTML === ''){
-  p.innerHTML = 'Nothing Here'
+  p.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>'
 }
