@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="description" content="A simple website, built with Glitch. Remix it to get your own."/>
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Hello World!" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://glitch-hello-website.glitch.me/" />
+    <meta property="og:description" content="A simple website, built with Glitch. Remix it to get your own."/>
+    <meta property="og:image" content="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2Fhello-website-social.png?v=1616712748147"/>
+    <meta name="twitter:card" content="summary" />
     <title>Chat test</title>
     <meta charset="utf-8" />
-    <script type="text/javascript">if(!document.URL.includes('https')){
-  console.log('redirecting to safe mode ...');
-        window.location = 'https://humble-tranquil-skateboard.glitch.me';
-}
-</script>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <script type="text/javascript">if(!document.URL.includes('https')){window.location = 'https://humble-tranquil-skateboard.glitch.me';}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css"/>
     <link rel="stylesheet" href="style.css"/>
@@ -16,13 +19,13 @@
   <body class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 p-10">
 
 	<!-- Component Start -->
-	<div class="eff flex flex-col flex-grow w-full max-w-xl bg-white shadow-xxl rounded-lg overflow-hidden">
-		<div class="flex flex-col flex-grow h-0 p-4 overflow-auto"></div>
+	  <div class="eff flex flex-col flex-grow w-full max-w-xl bg-white shadow-xxl rounded-lg overflow-hidden">
+		  <div class="flex flex-col flex-grow h-0 p-4 overflow-auto"></div>
 
-		<div class="bg-gray-300 p-4 send">
-			<input class="flex items-center h-10 w-full rounded px-3 text-sm" type="text" placeholder="Type your message…"><button onclick="send()">Send</button>
-		</div>
-	</div>
+		  <div class="bg-gray-300 p-4 send">
+			  <input class="flex items-center h-10 w-full rounded px-3 text-sm" type="text" placeholder="Type your message…"><button onclick="send()">Send</button>
+		  </div>
+	  </div>
     
 	<!-- Component End  -->
     
