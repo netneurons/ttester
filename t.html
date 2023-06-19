@@ -45,14 +45,16 @@
 		const chatBox = document.getElementById('chat-box');
 		const userInput = document.getElementById('user-input');
 
-		const openaiApiKey = 'YOUR_API_KEY_HERE';
+		const corsAnywhereUrl = 'https://cors-xo4n.onrender.com/';
+const openaiApiKey = 'YOUR_API_KEY';
+const apiEndpoint = 'https://api.openai.com/v1/';
 
 		let conversation = [];
 
 		function sendMessage(message) {
 			if (conversation.length === 0) {
 				chatBox.innerHTML += '<div class="bot-message message">Initializing conversation...</div>';
-				fetch('https://api.openai.com/v1/', {
+				fetch(corsAnywhereUrl + apiEndpoint, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -87,7 +89,7 @@
 			chatBox.innerHTML += `<div class="user-message message">${message}</div>`;
 			userInput.value = '';
 
-			fetch('https://api.openai.com/v1/', {
+			fetch(corsAnywhereUrl + apiEndpoint, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
