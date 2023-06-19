@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat App</title>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="user-input">
+      <button onclick="send()">Send</button>
+    </div>
+    <script>
+      var all = [];
+
+      function send() {
+        var userInput = document.getElementById('user-input').value;
+        var message = {
+          sender: 'user',
+          msg: userInput
+        };
+        all.push(message);
+        var jsonString = JSON.stringify(all);
+        console.log(jsonString);
+        // Here you can send the jsonString to the OpenAI API
+      }
+    </script>
+  </body>
+</html>
