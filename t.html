@@ -41,25 +41,45 @@
 <body>
 	<div class="chat-box" id="chat-box"></div>
 	<input type="text" id="user-input" placeholder="Type a message...">
-	<script src="https://cdn.jsdelivr.net/npm/@openai/api@0.6.0/dist/openai-api.min.js"></script>
 	<script>
 		const chatBox = document.getElementById('chat-box');
 		const userInput = document.getElementById('user-input');
 
 		const openaiApiKey = 'YOUR_API_KEY_HERE';
-		const chatEngine = new openai.api.Chat({ api_key: openaiApiKey });
 
-		let conversationId = null;
+		let conversation = [];
 
 		function sendMessage(message) {
-			if (!conversationId) {
+			if (conversation.length === 0) {
 				chatBox.innerHTML += '<div class="bot-message message">Initializing conversation...</div>';
-				chatEngine.create({
-					engine: 'davinci',
-					prompt: 'Hello, how can I assist you today?',
-				}).then(response => {
-					conversationId = response.conversation_id;
-					sendMessage(message);
+				fetch('https://api.openai.com/v1/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${openaiApiKey}`
+					},
+					body: JSON.stringify({
+						engine: 'davinci',
+						prompt: 'Hello, how can I assist you today?',
+						temperature: 0.5,
+						max_tokens: 60,
+						stop: '\n'
+					})
+				}).then(response => response.json())
+				.then(data => {
+					conversation.push({
+						sender: 'assistant',
+						msg: 'Hello, how can I assist you today?'
+					});
+					conversation.push({
+						sender: 'user',
+						msg: message
+					});
+					conversation.push({
+						sender: 'assistant',
+						msg: data.choices[0].text.trim()
+					});
+					displayConversation();
 				});
 				return;
 			}
@@ -67,14 +87,40 @@
 			chatBox.innerHTML += `<div class="user-message message">${message}</div>`;
 			userInput.value = '';
 
-			chatEngine.append({
-				conversation_id: conversationId,
-				text: message
-			}).then(response => {
-				const botMessage = response.choices[0].text;
-				chatBox.innerHTML += `<div class="bot-message message">${botMessage}</div>`;
-				chatBox.scrollTop = chatBox.scrollHeight;
+			fetch('https://api.openai.com/v1/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${openaiApiKey}`
+				},
+				body: JSON.stringify({
+					engine: 'davinci',
+					prompt: conversation.map(item => `${item.sender}: ${item.msg}\n`).join('') + `user: ${message}\nassistant:`,
+					temperature: 0.5,
+					max_tokens: 60,
+					stop: '\n'
+				})
+			}).then(response => response.json())
+			.then(data => {
+				conversation.push({
+					sender: 'user',
+					msg: message
+				});
+				conversation.push({
+					sender: 'assistant',
+					msg: data.choices[0].text.trim()
+				});
+				displayConversation();
 			});
+		}
+
+		function displayConversation() {
+			chatBox.innerHTML = '';
+			conversation.forEach(item => {
+				const className = item.sender === 'user' ? 'user-message' : 'bot-message';
+				chatBox.innerHTML += `<div class="${className} message">${item.msg}</div>`;
+			});
+			chatBox.scrollTop = chatBox.scrollHeight;
 		}
 
 		userInput.addEventListener('keydown', event => {
