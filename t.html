@@ -1,27 +1,87 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Chat App</title>
-  </head>
-  <body>
-    <div>
-      <input type="text" id="user-input">
-      <button onclick="send()">Send</button>
-    </div>
-    <script>
-      var all = [];
+<head>
+	<title>OpenAI Chat Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		.chat-box {
+			width: 400px;
+			height: 500px;
+			border: 1px solid black;
+			overflow-y: scroll;
+			padding: 10px;
+			margin: 20px;
+		}
+		.message {
+			margin: 10px;
+			padding: 10px;
+			border-radius: 10px;
+			font-size: 18px;
+			max-width: 80%;
+		}
+		.user-message {
+			background-color: #F5F5F5;
+			float: left;
+		}
+		.bot-message {
+			background-color: #008CBA;
+			color: white;
+			float: right;
+		}
+		input[type="text"] {
+			display: block;
+			margin: 10px;
+			font-size: 18px;
+			padding: 5px;
+			width: 80%;
+		}
+	</style>
+</head>
+<body>
+	<div class="chat-box" id="chat-box"></div>
+	<input type="text" id="user-input" placeholder="Type a message...">
+	<script src="https://cdn.jsdelivr.net/npm/@openai/api@0.6.0/dist/openai-api.min.js"></script>
+	<script>
+		const chatBox = document.getElementById('chat-box');
+		const userInput = document.getElementById('user-input');
 
-      function send() {
-        var userInput = document.getElementById('user-input').value;
-        var message = {
-          sender: 'user',
-          msg: userInput
-        };
-        all.push(message);
-        var jsonString = JSON.stringify(all);
-        console.log(jsonString);
-        // Here you can send the jsonString to the OpenAI API
-      }
-    </script>
-  </body>
+		const openaiApiKey = 'YOUR_API_KEY_HERE';
+		const chatEngine = new openai.api.Chat({ api_key: openaiApiKey });
+
+		let conversationId = null;
+
+		function sendMessage(message) {
+			if (!conversationId) {
+				chatBox.innerHTML += '<div class="bot-message message">Initializing conversation...</div>';
+				chatEngine.create({
+					engine: 'davinci',
+					prompt: 'Hello, how can I assist you today?',
+				}).then(response => {
+					conversationId = response.conversation_id;
+					sendMessage(message);
+				});
+				return;
+			}
+
+			chatBox.innerHTML += `<div class="user-message message">${message}</div>`;
+			userInput.value = '';
+
+			chatEngine.append({
+				conversation_id: conversationId,
+				text: message
+			}).then(response => {
+				const botMessage = response.choices[0].text;
+				chatBox.innerHTML += `<div class="bot-message message">${botMessage}</div>`;
+				chatBox.scrollTop = chatBox.scrollHeight;
+			});
+		}
+
+		userInput.addEventListener('keydown', event => {
+			if (event.key === 'Enter' && userInput.value) {
+				sendMessage(userInput.value);
+			}
+		});
+	</script>
+</body>
 </html>
