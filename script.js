@@ -28,3 +28,7 @@ document.querySelector('input').addEventListener('keydown', function(event) {
     send()
   }
 });
+var p = document.querySelector('.eff');
+if(p.innerHTML === ''){
+  p.innerHTML = 'Nothing Here'
+}
