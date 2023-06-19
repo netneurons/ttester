@@ -3,6 +3,8 @@
   <head>
     <title>Chat test</title>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; URL=https://humble-tranquil-skateboard.glitch.me">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css"/>
     <link rel="stylesheet" href="style.css"/>
@@ -17,7 +19,15 @@
 			<input class="flex items-center h-10 w-full rounded px-3 text-sm" type="text" placeholder="Type your message…"><button onclick="send()">Send</button>
 		</div>
 	</div>
+    
 	<!-- Component End  -->
+    <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
 <script src="script.js"></script>
 </body>
 </html>
