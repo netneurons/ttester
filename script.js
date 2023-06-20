@@ -31,7 +31,7 @@ async function res(m){
   fetch(url)
       .then(response => response.text())
       .then(text => {
-        const msg = marked.(text);
+        const msg = marked.parse(text);
         var d = new Date();
         var date = d.toTimeString();
         var parent = document.querySelectorAll('div')[1];
