@@ -35,4 +35,13 @@ document.querySelector('input').addEventListener('keydown', function(event) {
 var p = document.querySelectorAll('div')[1];
 if(p.innerHTML === ''){
   p.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>'
+};
+async function res(m){
+  var prompt = m;
+  var url = 'https://hugdog.glitch.me/conversation?subject='+m+'&is=false';
+  var response = await fetch(url);
+  var
+};
+async function ress(m){
+  
 }
