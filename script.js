@@ -1,16 +1,16 @@
 function send(){
   var parent = document.querySelectorAll('div')[1];
-  var msg = document.querySelector('input').value;
+  var mssg = document.querySelector('input').value;
   var d= new Date();
   var date = d.toTimeString();
-  var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm">'+ msg +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div></div>';
+  var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm">'+ mssg +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div></div>';
   if(parent.textContent === 'Nothing Here, write new message.'){
   parent.innerHTML=inner
   }else{
   parent.innerHTML+=inner;
   }
   document.querySelector('input').value = '';
-  res(document.querySelector('input').value);
+  res(mssg);
 }
 document.querySelector('input').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
@@ -27,42 +27,33 @@ async function res(m){
     ress(m);
   }
   var prompt = m;
-  var url = 'https://hugdog.glitch.me/conversation?subject='+m+'&is=false';
+  var url = 'https://hugdog.glitch.me/conversation?subject='+prompt+'&is=false';
   fetch(url)
       .then(response => response.text())
       .then(text => {
-        const msg = marked(text);
+        const msg = marked.(text);
         var d = new Date();
         var date = d.toTimeString();
         var parent = document.querySelectorAll('div')[1];
         var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
         parent.innerHTML+=inner;
         document.querySelector('input').value = '';
-
-      })
-      .catch(error => console.error(error));
+}).catch(error => console.error(error));
 };
 
 async function ress(m){
   is=true;
     var prompt = m;
-  var url = 'https://hugdog.glitch.me/conversation?subject='+m+'&is=true';
+  var url = 'https://hugdog.glitch.me/conversation?subject='+prompt+'&is=true';
   fetch(url)
       .then(response => response.text())
       .then(text => {
-        const msg = marked(text);
+        const msg = marked.parse(text);
         var d = new Date();
         var date = d.toTimeString();
         var parent = document.querySelectorAll('div')[1];
         var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
-        if(parent.textContent === 'Nothing Here, write new message.'){
-  parent.innerHTML=inner
-  }else{
-  parent.innerHTML+=inner;
-  }
-  document.querySelector('input').value = '';
-
-      })
-      .catch(error => console.error(error));
-
+        parent.innerHTML+=inner;
+        document.querySelector('input').value = '';
+}).catch(error => console.error(error));
 }
