@@ -48,6 +48,23 @@ async function ress(m){
   fetch(url)
       .then(response => response.text())
       .then(text => {
+    const t = window.markdownit({
+        html: true,                       
+        linkify: true,                    
+        typographer: true,                
+        highlight: (str, lang) => {       
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              var option = {language:lang, ignoreIllegals: true};
+              return '<pre class="hljs"><code>' +
+                     hljs.highlight(str, option).value +
+                     '</code></pre>';
+            } catch (__) {}
+          }
+    
+          return '<pre class="hljs"><code>' + t.utils.escapeHtml(str) + '</code></pre>';
+        },
+      })
         const msg = marked.parse(text);
         var d = new Date();
         var date = d.toTimeString();
@@ -57,3 +74,18 @@ async function ress(m){
         document.querySelector('input').value = '';
 }).catch(error => console.error(error));
 }
+   function m(){
+      
+    
+      // Convert markdown to HTML using the render method
+      
+      const markdown = document.querySelector('textarea').value;
+      const html = ;
+    
+      // Set the HTML content of the div element to the rendered HTML
+      const markdownDiv = document.getElementById('markdown');
+      markdownDiv.innerHTML = html;
+    
+      // Call highlight.js to highlight code blocks
+      hljs.highlightAll();
+      }
