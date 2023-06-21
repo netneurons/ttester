@@ -29,7 +29,7 @@ async function res(m){
     ress(m);
   }else{
   var prompt = m;
-  var url = 'https://hugdog.glitch.me/conversation?subject='+prompt+'&is=false';
+  var url = '/conversation?subject='+prompt+'&is=false';
   fetch(url)
       .then(response => response.text())
       .then(text => {
@@ -65,7 +65,7 @@ async function res(m){
 async function ress(m){
   is=false;
     var prompt = m;
-  var url = 'https://hugdog.glitch.me/conversation?subject='+prompt+'&is=true';
+  var url = '/conversation?subject='+prompt+'&is=true';
   fetch(url)
       .then(response => response.text())
       .then(text => {

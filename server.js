@@ -8,18 +8,6 @@ const {
 } = require("poe-npm");
 const app = express();
 const fetch = require("node-fetch");
-const cors = require("cors");
-const allowedOrigins = ["https://tor-xo4n.glitch.me"];
-const corsOptions = {
-  origin: "*", //(origin, callback) => {
-  //if (allowedOrigins.indexOf(origin) !== -1) {
-  // callback(null, true);
-  //} else {
-  // callback(new Error('Not allowed by CORS'));
-  //}
-  //}
-};
-app.use(cors(corsOptions));
 const formkey = "24740fbf83f10ac69cec1c6d76441f9d";
 const cookie = "VHOtnHuzh8f1ODx6xx-sFg==";
 setAuth("Quora-Formkey", formkey);
