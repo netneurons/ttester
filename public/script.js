@@ -1,8 +1,24 @@
+function ver(s) {
+  const entities = {
+    '<': '&lt;',
+    '>': '&gt;',
+    '&': '&amp;',
+    '\"': '&quot;',
+    '\'': '&#x27;',
+    '/': '&#x2F;'
+  };
+  const sanitizedText = s.replace(/[<>&"'\/]/g, function(match) {
+    return entities[match];
+  });
+  return sanitizedText;
+};
 function send(){
   var parent = document.querySelectorAll('div')[1];
-  var mssg = document.querySelector('input').value;
+  var msssg = document.querySelector('input').value;
+  var mssg = ver(msssg);
   var d= new Date();
   var date = d.toTimeString();
+  if(mssg){
   var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm divw">'+ mssg +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div></div>';
   if(parent.textContent === 'Nothing Here, write new message.'){
   parent.innerHTML=inner
@@ -13,6 +29,7 @@ function send(){
   }
   document.querySelector('input').value = '';
   res(mssg);
+  }
 }
 document.querySelector('input').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
@@ -62,6 +79,7 @@ async function res(m){
 }).catch(error => console.error(error));
 }
 };
+
 async function ress(m){
   is=false;
     var prompt = m;
