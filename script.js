@@ -21,28 +21,46 @@ var p = document.querySelectorAll('div')[1];
 if(p.innerHTML === ''){
   p.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>'
 };
-var is = null;
+var is = true;
 async function res(m){
-  if(is==='true'){
+  if(is===true){
     ress(m);
-  }
+  }else{
   var prompt = m;
   var url = 'https://hugdog.glitch.me/conversation?subject='+prompt+'&is=false';
   fetch(url)
       .then(response => response.text())
       .then(text => {
-        const msg = marked.parse(text);
+        const t = window.markdownit({
+        html: true,                       
+        linkify: true,                    
+        typographer: true,                
+        highlight: (str, lang) => {       
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              var option = {language:lang, ignoreIllegals: true};
+              return '<pre class="hljs"><code>' +
+                     hljs.highlight(str, option).value +
+                     '</code></pre>';
+            } catch (__) {}
+          }
+    
+          return '<pre class="hljs"><code>' + t.utils.escapeHtml(str) + '</code></pre>';
+        },
+      })
+        const msg = t.render(text);
         var d = new Date();
         var date = d.toTimeString();
         var parent = document.querySelectorAll('div')[1];
         var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
         parent.innerHTML+=inner;
         document.querySelector('input').value = '';
+        hljs.highlightAll();
 }).catch(error => console.error(error));
+}
 };
-
 async function ress(m){
-  is=true;
+  is=false;
     var prompt = m;
   var url = 'https://hugdog.glitch.me/conversation?subject='+prompt+'&is=true';
   fetch(url)
@@ -65,27 +83,13 @@ async function ress(m){
           return '<pre class="hljs"><code>' + t.utils.escapeHtml(str) + '</code></pre>';
         },
       })
-        const msg = marked.parse(text);
+        const msg = t.render(text);
         var d = new Date();
         var date = d.toTimeString();
         var parent = document.querySelectorAll('div')[1];
         var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
         parent.innerHTML+=inner;
         document.querySelector('input').value = '';
+        hljs.highlightAll();
 }).catch(error => console.error(error));
 }
-   function m(){
-      
-    
-      // Convert markdown to HTML using the render method
-      
-      const markdown = document.querySelector('textarea').value;
-      const html = ;
-    
-      // Set the HTML content of the div element to the rendered HTML
-      const markdownDiv = document.getElementById('markdown');
-      markdownDiv.innerHTML = html;
-    
-      // Call highlight.js to highlight code blocks
-      hljs.highlightAll();
-      }
