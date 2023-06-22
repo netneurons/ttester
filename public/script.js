@@ -115,8 +115,9 @@ async function ress(m){
         hljs.highlightAll();
 }).catch(error => console.error(error));
 }
-async function complete(m){
- var prompt = m;
+async function complete(){
+ var prompt = document.querySelector('input').value;
+  if(prompt){
   var url = '/complete?subject='+prompt;
   fetch(url)
       .then(response => response.text())
@@ -148,4 +149,10 @@ async function complete(m){
         document.querySelector('input').value = '';
         hljs.highlightAll();
 }).catch(error => console.error(error));
-};
+}};
+function migrate(){
+  var alert = document.querySelector('div.bg-yellow-100');
+  alert.innerHTML = '<p class="font-bold">Warning</p><p>This is a completing text version if you want to back to the non-stable version please refresh the browser and it will be migrated.';
+  var btn = document.querySelector('button');
+  btn.onclick = complete();
+}
