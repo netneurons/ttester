@@ -116,5 +116,36 @@ async function ress(m){
 }).catch(error => console.error(error));
 }
 async function complete(m){
-  
+ var prompt = m;
+  var url = '/complete?subject='+prompt;
+  fetch(url)
+      .then(response => response.text())
+      .then(text => {
+    const t = window.markdownit({
+        html: true,                       
+        linkify: true,                    
+        typographer: true,                
+        highlight: (str, lang) => {       
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              var option = {language:lang, ignoreIllegals: true};
+              return '<pre class="hljs"><code>' +
+                     hljs.highlight(str, option).value +
+                     '</code></pre>';
+            } catch (__) {}
+          }
+    
+          return '<pre class="hljs"><code>' + t.utils.escapeHtml(str) + '</code></pre>';
+        },
+      })
+        const msg = t.render(text);
+        var d = new Date();
+        var date = d.toTimeString();
+        var parent = document.querySelectorAll('div')[1];
+        var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-server mx-auto"></i></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm divw">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
+        parent.innerHTML+=inner;
+        document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
+        document.querySelector('input').value = '';
+        hljs.highlightAll();
+}).catch(error => console.error(error));
 };
