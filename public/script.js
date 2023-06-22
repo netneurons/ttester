@@ -115,3 +115,6 @@ async function ress(m){
         hljs.highlightAll();
 }).catch(error => console.error(error));
 }
+async function complete(m){
+  
+};
