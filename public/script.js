@@ -13,7 +13,7 @@ function ver(s) {
   return sanitizedText;
 };
 function send(){
-  var parent = document.querySelectorAll('div')[1];
+  var parent = document.querySelector('.divw');
   var msssg = document.querySelector('input').value;
   var mssg = ver(msssg);
   var d= new Date();
@@ -36,7 +36,7 @@ document.querySelector('input').addEventListener('keydown', function(event) {
     send();
   }
 });
-var p = document.querySelectorAll('div')[1];
+var p = document.querySelector('.divw');
 if(p.innerHTML === ''){
   p.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>'
 };
@@ -70,7 +70,7 @@ async function res(m){
         const msg = t.render(text);
         var d = new Date();
         var date = d.toTimeString();
-        var parent = document.querySelectorAll('div')[1];
+        var parent = document.querySelector('.divw');
         var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-server mx-auto"></i></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm divw">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
         parent.innerHTML+=inner;
         document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
@@ -107,7 +107,7 @@ async function ress(m){
         const msg = t.render(text);
         var d = new Date();
         var date = d.toTimeString();
-        var parent = document.querySelectorAll('div')[1];
+        var parent = document.querySelector('.divw');
         var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-server mx-auto"></i></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm divw">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
         parent.innerHTML+=inner;
         document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
@@ -141,7 +141,7 @@ async function complete(m){
         const msg = t.render(text);
         var d = new Date();
         var date = d.toTimeString();
-        var parent = document.querySelectorAll('div')[1];
+        var parent = document.querySelector('.divw');
         var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-server mx-auto"></i></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm divw">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
         parent.innerHTML+=inner;
         document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
