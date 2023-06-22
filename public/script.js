@@ -31,9 +31,10 @@ function send(){
   res(mssg, msssg);
   }
 }
+let s1 = send;
 document.querySelector('input').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
-    send();
+    s1();
   }
 });
 var p = document.querySelector('.divw');
@@ -176,4 +177,5 @@ function migrate(){
   alert.innerHTML = '<p class="font-bold">Warning</p><p>This is a completing text version if you want to back to the non-stable version please refresh the browser and it will be migrated.';
   var btn = document.querySelector('button');
   btn.setAttribute('onclick','send2()');
+  s1 = send2
 }
