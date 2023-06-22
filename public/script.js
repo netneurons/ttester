@@ -114,19 +114,29 @@ async function ress(m){
         document.querySelector('input').value = '';
         hljs.highlightAll();
 }).catch(error => console.error(error));
-}
-async function complete(){
-var parent = document.querySelector('.divw');
- var prompt = document.querySelector('input').value;
-  if(prompt){
-  var mssg = ver(prompt);
+};
+function send2(){
+ var parent = document.querySelector('.divw');
+  var msssg = document.querySelector('input').value;
+  var mssg = ver(msssg);
   var d= new Date();
   var date = d.toTimeString();
-    var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm divw">'+ prompt +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-user" class="mx-auto"></i></div></div>';
+  if(mssg){
+  var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm divw">'+ mssg +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-user" class="mx-auto"></i></div></div>';
   if(parent.textContent === 'Nothing Here, write new message.'){
   parent.innerHTML=inner
   document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
-  var url = '/complete?subject='+prompt;
+  }else{
+  parent.innerHTML+=inner;
+  document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
+  }
+  document.querySelector('input').value = '';
+  complete(mssg);
+  } 
+};
+function complete(msg){
+ var prompt = msg;
+var url = '/complete?subject='+prompt;
   fetch(url)
       .then(response => response.text())
       .then(text => {
@@ -157,14 +167,10 @@ var parent = document.querySelector('.divw');
         document.querySelector('input').value = '';
         hljs.highlightAll();
 }).catch(error => console.error(error));
-}else{
-  parent.innerHTML+=inner;
-  document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
-  
-}};
+};
 function migrate(){
   var alert = document.querySelector('div.bg-yellow-100');
   alert.innerHTML = '<p class="font-bold">Warning</p><p>This is a completing text version if you want to back to the non-stable version please refresh the browser and it will be migrated.';
   var btn = document.querySelector('button');
-  btn.setAttribute('onclick','complete()');
+  btn.setAttribute('onclick','send2()');
 }
