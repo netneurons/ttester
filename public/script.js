@@ -28,7 +28,7 @@ function send(){
   document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
   }
   document.querySelector('input').value = '';
-  res(mssg);
+  res(mssg, msssg);
   }
 }
 document.querySelector('input').addEventListener('keydown', function(event) {
@@ -41,12 +41,13 @@ if(p.innerHTML === ''){
   p.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>'
 };
 var is = true;
-async function res(m){
+async function res(m, nsn){
   if(is===true){
-    ress(m);
+    ress(m, nsn);
   }else{
   var prompt = m;
-  var url = '/conversation?subject='+prompt+'&is=false';
+    var ns = nsn;
+  var url = '/conversation?subject='+ns+'&is=false';
   fetch(url)
       .then(response => response.text())
       .then(text => {
@@ -80,10 +81,11 @@ async function res(m){
 }
 };
 
-async function ress(m){
+async function ress(m, nsn){
   is=false;
     var prompt = m;
-  var url = '/conversation?subject='+prompt+'&is=true';
+  var ns = nsn;
+  var url = '/conversation?subject='+ns+'&is=true';
   fetch(url)
       .then(response => response.text())
       .then(text => {
@@ -131,12 +133,13 @@ function send2(){
   document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
   }
   document.querySelector('input').value = '';
-  complete(mssg);
+  complete(mssg, msssg);
   } 
 };
-function complete(msg){
+function complete(msg, nsn){
  var prompt = msg;
-var url = '/complete?subject='+prompt;
+  var ns = nsn;
+var url = '/complete?subject='+ns;
   fetch(url)
       .then(response => response.text())
       .then(text => {
