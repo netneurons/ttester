@@ -1,9 +1,9 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
-
-const url = 'https://poe.com';
-const domain = 'poe.com';
+console.log('starting');
+const url = 'https://glitch.com';
+const domain = 'glitch.com';
 const visited = new Set();
 const links = [];
 
