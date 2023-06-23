@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Link Crawler</title>
+    <style type="text/css">
+      input[type="text"] {
+        width: 80%;
+        padding: 12px 20px;
+        margin: 8px 0;
+
+        box-sizing: border-box;
+
+        border: 2px solid #ccc;
+
+        border-radius: 4px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+
+        margin: 8px 0;
+
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      input [type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Link Crawler</h1>
+
+    <form>
+      <label for="link">Enter a link to crawl:</label>
+      <input type="text" id="link" name="link" /><br />
+
+      <input type="submit" value="Crawl" />
+    </form>
+
+    <script type="text/javascript">
+      			// Get the form and input elements
+      			const form = document.querySelector('form');
+      			const input = document.querySelector('input[type="text"]');
+
+form.addEventListener('submit', (event) => {
+
+
+      		event.preventDefault();
+
+
+
+      	// Get the link from the input element
+
+
+      	const link = input.value;
+
+
+
+      // Construct the URL for the CORS proxy
+
+
+      const proxyUrl = 'https://cors-xo4n.onrender.com/';
+
+
+
+      	// Fetch the HTML content of the link using the CORS
+
+      proxy
+      				fetch(proxyUrl + link)
+
+
+      				.then(response =>
+
+      response.text())
+
+
+      .then(html => {
+
+
+      // Parse the HTML content and extract all links
+
+
+      			const parser = new DOMParser();
+
+
+      					const doc =
+
+      parser.parseFromString(html, 'text/html');
+
+
+      			const links = Array.from
+
+      (doc.querySelectorAll('a'))
+
+
+      		.map(a => {
+
+
+      				// Check if the href is a
+
+      relative URL
+
+
+      		if (a.href.startsWith('/') || a.href.startsWith('.') ||
+
+      a.href.startsWith('?') || a.href.startsWith('#')) {
+
+
+      						//
+
+      Prepend the domain to the relative URL
+
+
+      					const url = new
+
+      URL(link);
+
+
+      		return `${url.protocol}//${url.host}${a.href}`;
+
+
+
+
+      } else {
+
+
+      		return a.href;
+
+
+      				}
+
+
+      				});
+
+
+
+      			// Remove duplicates
+
+
+      			const uniqueLinks = [...new Set
+
+      (links)];
+
+      						//
+
+      Convert the links to JSON and download the file
+
+
+      			const json = JSON.stringify
+
+      (uniqueLinks);
+
+
+      const blob = new Blob([json], {type: 'application/json'});
+
+
+      				const url =
+
+      URL.createObjectURL(blob);
+
+
+      	const link = document.createElement('a');
+
+
+      				link.href = url;
+
+
+      				link.download =
+
+      'links.json';
+
+
+      link.click();
+      					})
+
+
+      				.catch(error => {
+
+
+      				console.error(error);
+
+
+      			});
+      			});
+    </script>
+  </body>
+</html>
