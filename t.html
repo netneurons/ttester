@@ -68,18 +68,10 @@ form.addEventListener('submit', (event) => {
 
 
 
-      	// Fetch the HTML content of the link using the CORS
+      	// Fetch the HTML content of the link using the CORS proxy
+      				fetch(proxyUrl + link).then(response =>
 
-      proxy
-      				fetch(proxyUrl + link)
-
-
-      				.then(response =>
-
-      response.text())
-
-
-      .then(html => {
+      response.text()).then(html => {
 
 
       // Parse the HTML content and extract all links
@@ -88,37 +80,22 @@ form.addEventListener('submit', (event) => {
       			const parser = new DOMParser();
 
 
-      					const doc =
-
-      parser.parseFromString(html, 'text/html');
+      					const doc = parser.parseFromString(html, 'text/html');
 
 
-      			const links = Array.from
-
-      (doc.querySelectorAll('a'))
+      			const links = Array.from(doc.querySelectorAll('a')).map(a => {
 
 
-      		.map(a => {
+      				// Check if the href is a relative URL
 
 
-      				// Check if the href is a
-
-      relative URL
+      		if (a.href.startsWith('/') || a.href.startsWith('.') || a.href.startsWith('?') || a.href.startsWith('#')) {
 
 
-      		if (a.href.startsWith('/') || a.href.startsWith('.') ||
-
-      a.href.startsWith('?') || a.href.startsWith('#')) {
+      						//Prepend the domain to the relative URL
 
 
-      						//
-
-      Prepend the domain to the relative URL
-
-
-      					const url = new
-
-      URL(link);
+      					const url = new URL(link);
 
 
       		return `${url.protocol}//${url.host}${a.href}`;
@@ -142,26 +119,18 @@ form.addEventListener('submit', (event) => {
       			// Remove duplicates
 
 
-      			const uniqueLinks = [...new Set
+      			const uniqueLinks = [...new Set(links)];
 
-      (links)];
-
-      						//
-
-      Convert the links to JSON and download the file
+      						// the links to JSON and download the file
 
 
-      			const json = JSON.stringify
-
-      (uniqueLinks);
+      			const json = JSON.stringify(uniqueLinks);
 
 
       const blob = new Blob([json], {type: 'application/json'});
 
 
-      				const url =
-
-      URL.createObjectURL(blob);
+      				const url = URL.createObjectURL(blob);
 
 
       	const link = document.createElement('a');
@@ -170,9 +139,7 @@ form.addEventListener('submit', (event) => {
       				link.href = url;
 
 
-      				link.download =
-
-      'links.json';
+      				link.download = 'links.json';
 
 
       link.click();
