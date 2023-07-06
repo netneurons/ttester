@@ -89,7 +89,7 @@ wss.on('connection', function connection(ws, req) {
 
 
 app.listen(3000, () => {
-  console.log("Server listening on port 3000");
+  console.log("Server listening on port 1234");
 });
 
 app.on('upgrade', (request, socket, head) => {
