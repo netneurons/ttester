@@ -186,3 +186,4 @@ function migrate(){
   btn.setAttribute('onclick','send2()');
   s1 = send2
 }
+function message(text, san)
