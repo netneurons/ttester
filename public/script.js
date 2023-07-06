@@ -37,11 +37,12 @@ var socket = new WebSocket('wss://wss-1xw1.onrender.com', [], { pingInterval: 50
 function senc(){
   var t = document.querySelector('input').value;
   var s = ver(t);
-  if(t){
+  if(t && s){
   message(t,s);
-    
+  }
 }
 function message(text, san){
+  if(text && san){
   var parent = document.querySelector('.divw');
   var d= new Date();
   var date = d.toTimeString();
@@ -61,6 +62,7 @@ function message(text, san){
   m.push(json);
   socket.send(JSON.stringify(m));
   }
+}
 socket.addEventListener('message', event => {
             console.log('Received message:', event.data);
                 var b = {
