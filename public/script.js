@@ -32,7 +32,7 @@ if(p.innerHTML === ''){
 };
 
 var m = [];
-var socket = new WebSocket('wss://wss-1xw1.onrender.com', [], { pingInterval: 5000 });
+var socket = new WebSocket('wss://' + window.location.host, [], { pingInterval: 5000 });
 
 function senc(){
   var t = document.querySelector('input').value;
@@ -46,7 +46,7 @@ function message(text, san){
   var parent = document.querySelector('.divw');
   var d= new Date();
   var date = d.toTimeString();
-  var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm divw">'+ san +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-user" class="mx-auto"></i></div></div>';
+  var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xl ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm divw">'+ san +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-user" class="mx-auto"></i></div></div>';
   if(parent.textContent === 'Nothing Here, write new message.'){
   parent.innerHTML=inner
   document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
@@ -101,7 +101,7 @@ function receive(text){
         var d = new Date();
         var date = d.toTimeString();
         var parent = document.querySelector('.divw');
-        var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xs"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-server mx-auto"></i></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm divw">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
+        var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xl"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-server mx-auto"></i></div><div><div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg"><p class="text-sm divw">'+msg+'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div></div>';
         parent.innerHTML+=inner;
         document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
         document.querySelector('input').value = '';
