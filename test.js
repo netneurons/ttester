@@ -6,6 +6,8 @@ const {
   sendMessage,
   getMessage,
 } = require("poe-npm");
+const WebSocket = require('ws');
+const url = require('url');
 const app = express();
 const fetch = require("node-fetch");
 const uurl = require('url');
@@ -15,7 +17,7 @@ setAuth("Quora-Formkey", formkey);
 setAuth("Cookie", `m-b=${cookie}`);
 app.use(express.static("public"));
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/public/index2.html");
 });
 async function conversation(prompt, first) {
   if (first === "true") {
@@ -68,63 +70,15 @@ async function pic(text) {
     .then((responseText) => console.log(responseText))
     .catch((error) => console.error(error));
 }
-app.get("/picture", async (req, res) => {
-  const subject = req.query.subject;
-  const data = pic(subject);
-  res.type("text").send("Sorry but we are doing our best to make it work!!!");
-});
-app.get("/conversation", async (req, res) => {
-  const subject = req.query.subject;
-  const is = req.query.is;
-  const data = await conversation(subject, is);
-  res.type("text").send(data);
-});
-app.get("/complete", async (req, res) => {
-  const subject = req.query.subject;
-  const data = await complete(subject);
-  res.type("text").send(data);
-});
-app.get("/music", async (req, res) => {
-  const subject = req.query.subject;
-  const data = await music(subject);
-  res.type("text").send(data);
-});
-app.listen(3000, () => {
-  console.log("Server listening on port 3000");
-});
-
-
-
-
-const WebSocket = require('ws');
-const url = require('url');
-
-
 const wss = new WebSocket.Server({ noServer: true });
 
-// Define a function to be triggered by messages
-function processMessage(message) {
-  // Your processing logic goes here
-  // For this example, we'll just capitalize the message
-  return message;
-}
-
 wss.on('connection', function connection(ws, req) {
-  const origin = req.headers.origin;
-  const { hostname } = url.parse(origin);
-
-  if (hostname !== 'comfortable-emphasized-elk.glitch.me') {
-    ws.close(1000, 'Unauthorized');
-    return;
-  }
   console.log('WebSocket connection opened');
 
   ws.on('message', function incoming(message) {
-    console.log('Received message:', message);
     const decoder = new TextDecoder();
     const decodedMessage = decoder.decode(message);
-    // Process the message and send the result back to the client
-    const result = processMessage(decodedMessage);
+    const result = complete(decodedMessage);
     ws.send(result);
   });
 
@@ -134,12 +88,11 @@ wss.on('connection', function connection(ws, req) {
 });
 
 
-
-const server = app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(3000, () => {
+  console.log("Server listening on port 3000");
 });
 
-server.on('upgrade', (request, socket, head) => {
+app.on('upgrade', (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, socket => {
     wss.emit('connection', socket, request);
   });

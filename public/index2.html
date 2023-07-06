@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TOR GPT - Your AI assistant</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript">if(!document.URL.includes('https')){window.location = 'https://torgpt.glitch.me';}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
+    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 p-0">
+<div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 w-full mt-0 pt-0 pb-0" style="border-left-width:10px" role="alert"><p class="font-bold">Warning</p><p>This is a non-stable version. Please migrate to the stable version but without remembring feature, only completing text feature.</p> <div class="text-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="migrate()">
+  Migrate Now!
+</div>
+</div>
+	<!-- Component Start -->
+	  <div class="eff flex flex-col flex-grow w-full max-w-xxl bg-white shadow-xxl rounded-lg overflow-hidden">
+		  <div class="divw flex flex-col flex-grow h-0 p-4 overflow-auto"></div>
+
+		  <div class="bg-gray-300 p-4 send">
+			  <input class="flex items-center h-10 w-full rounded px-3 text-sm" type="text" placeholder="Type your message…"><button onclick="send()"><i class="fa fa-paper-plane"></i></button>
+		  </div>
+	  </div>
+    
+	<!-- Component End  -->
+    
+<script src="script2.js"></script>
+</body>
+</html>
