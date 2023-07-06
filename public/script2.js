@@ -28,7 +28,7 @@ function send(){
   document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
   }
   document.querySelector('input').value = '';
-  complete(mssg, msssg);
+  sendMessage(msssg)
   }
 }
 let s1 = send;
@@ -42,10 +42,6 @@ if(p.innerHTML === ''){
   p.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>'
 };
 
-function complete(msg, nsn){
- var prompt = msg;
-  var ns = nsn;
-  
 function make(text){
     const t = window.markdownit({
         html: true,                       
@@ -61,6 +57,7 @@ function make(text){
         document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
         document.querySelector('input').value = '';
 };
+
 var socket = new WebSocket('wss://' + window.location.host, [], { pingInterval: 5000 });
 
           socket.addEventListener('open', event => {
@@ -84,4 +81,4 @@ var socket = new WebSocket('wss://' + window.location.host, [], { pingInterval: 
           const encoder = new TextEncoder();
   const encodedMessage = encoder.encode(message);
   socket.send(encodedMessage);
-          }}
+          }
