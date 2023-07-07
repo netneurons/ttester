@@ -4,12 +4,14 @@ const url = require('url');
 const { setAuth,loadChatId,clearContext,sendMessage,getMessage,} = require("poe-npm");
 const app = express();
 const fetch = require("node-fetch");
-const formkey = "24740fbf83f10ac69cec1c6d76441f9d";
-const cookie = "VHOtnHuzh8f1ODx6xx-sFg==";
+const formkey = process.env.fk;
+const cookie = process.env.c;
 setAuth("Quora-Formkey", formkey);
 setAuth("Cookie", `m-b=${cookie}`);
 app.use(express.static('public'));
-
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 const wss = new WebSocket.Server({ noServer: true });
 
 // Define a function to be triggered by messages
@@ -31,10 +33,10 @@ wss.on('connection', function connection(ws, req) {
   const origin = req.headers.origin;
   const { hostname } = url.parse(origin);
 
-//  if (hostname !== 'comfortable-emphasized-elk.glitch.me') {
-  //  ws.close(1000, 'Unauthorized');
-    //return;
- // }
+  if (hostname !== 'tor-gpt.onrender.com') {
+    ws.close(1000, 'Unauthorized');
+   return;
+ }
   console.log('WebSocket connection opened');
 
   ws.on('message', async function incoming(message) {
