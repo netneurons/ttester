@@ -46,7 +46,7 @@ var w = new WebSocket('wss://' + window.location.host, [], { pingInterval: 5000 
 
 function senc(){
   const t = document.querySelector('input').value;
-  const s = ver(t);
+  const s = v(t);
   if(t && s){
   m(t,s);
   }
