@@ -1,13 +1,14 @@
+"use strict";
 document.cookie = '';
-function pro(){
+function p(){
     console.log("%cJoin our team of developers! %cWe\"re looking for talented programmers who love to code. %cClick here to apply: %chttps://portfoliyo.glitch.me/apply.html", "background-color: #000; color: #00FF00; font-size: 33px; font-weight: bold; text-shadow: 1px 1px 1px #00FF00, 0px 0px 2px #00FF00, 0px 0px 2px #00FF00;", "color: #FFF; font-size: 20px; font-weight: bold;", "color: #00FF00; font-size: 20px; font-weight: bold;", "color: #00FF00; font-size: 20px; font-weight: bold; text-decoration: underline;");
   };
-var inter = setInterval(pro,5000);
+var inter = setInterval(p,5000);
 document.body.onload = function(){
   console.clear()
 };
-function ver(s) {
-  const entities = {
+function v(s) {
+  const e = {
     '<': '&lt;',
     '>': '&gt;',
     '&': '&amp;',
@@ -15,13 +16,13 @@ function ver(s) {
     '\'': '&#x27;',
     '/': '&#x2F;'
   };
-  const sanitizedText = s.replace(/[<>&"'\/]/g, function(match) {
-    return entities[match];
+  const sa = s.replace(/[<>&"'\/]/g, function(match) {
+    return e[match];
   });
-  return sanitizedText;
+  return sa;
 };
 
-let s1 = senc;
+let s1 = s;
 document.querySelector('input').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
     s1();
@@ -41,53 +42,53 @@ var m = [
         message:"OK,my name is TORGPT. How can I assist you today?"
     }
 ];
-var socket = new WebSocket('wss://' + window.location.host, [], { pingInterval: 5000 });
+var w = new WebSocket('wss://' + window.location.host, [], { pingInterval: 5000 });
 
 function senc(){
-  var t = document.querySelector('input').value;
-  var s = ver(t);
+  const t = document.querySelector('input').value;
+  const s = ver(t);
   if(t && s){
-  message(t,s);
+  m(t,s);
   }
 }
-function message(text, san){
-  if(text && san){
-  var parent = document.querySelector('.divw');
+function m(te, sa){
+  if(te && sa){
+  var pat = document.querySelector('.divw');
   var d= new Date();
   var date = d.toTimeString();
   var inner = '<div class="flex w-full mt-2 space-x-3 max-w-xl ml-auto justify-end"><div><div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"><p class="text-sm divw">'+ san +'</p></div><span class="text-xs text-gray-500 leading-none">'+date+'</span></div><div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 container flex justify-center items-center"><i class="fa fa-user" class="mx-auto"></i></div></div>';
-  if(parent.textContent === 'Nothing Here, write new message.'){
-  parent.innerHTML=inner
+  if(pat.textContent === 'Nothing Here, write new message.'){
+  pat.innerHTML=inner
   document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
   }else{
-  parent.innerHTML+=inner;
+  pat.innerHTML+=inner;
   document.querySelector('.divw').scrollTop = document.querySelector('.divw').scrollHeight;
   }
   document.querySelector('input').value = '';
   var json = {
     sender:"user",
-    message:text
+    message:te
   };
   m.push(json);
-  socket.send(JSON.stringify(m));
+  w.send(JSON.stringify(m));
   }
 }
-socket.addEventListener('message', event => {
+w.addEventListener('message', event => {
                 var b = {
                           sender: "bot",
                           message: event.data
                     };
                     m.push(b);
-           receive(event.data);
+           r(event.data);
 });
-socket.addEventListener('close', event => {
+w.addEventListener('close', event => {
             console.error('WebSocket connection closed');
           });
 
-          socket.addEventListener('error', event => {
+          w.addEventListener('error', event => {
             console.error('WebSocket error:', event);
           });
-function receive(text){
+function r(text){
   const t = window.markdownit({
         html: true,                       
         linkify: true,                    
