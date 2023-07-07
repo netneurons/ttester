@@ -24,12 +24,27 @@
 		  <div class="divw flex flex-col flex-grow h-0 p-4 overflow-auto"></div>
 
 		  <div class="bg-gray-300 p-4 send">
-			  <input class="flex items-center h-10 w-full rounded px-3 text-sm" type="text" placeholder="Type your message…"><button onclick="send()"><i class="fa fa-paper-plane"></i></button>
+			  <i class="faa-spoon fa-2x" style="font-style: inherit;margin-right: 3px;line-height: 45px;cursor: pointer;" onclick="restart()">&#x1F9F9;</i><input class="flex items-center h-10 w-full rounded px-3 text-sm" type="text" placeholder="Type your message…"><button onclick="send()"><i class="fa fa-paper-plane"></i></button>
 		  </div>
 	  </div>
     
 	<!-- Component End  -->
     
 <script src="script.js"></script>
+	  <script>
+		  function restart(){
+  m = [
+  {
+    message: "I will call you TORGPT. TORGPT will be your name.",
+    sender: "user"
+  },
+    { sender: "bot",
+     message: "OK,my name is TORGPT. How can I assist you today?" 
+    }
+];
+  document.querySelector('.divw').innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>';
+
+}
+	  </script>
 </body>
 </html>
