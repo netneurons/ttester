@@ -72,7 +72,6 @@ function message(text, san){
   }
 }
 socket.addEventListener('message', event => {
-            console.log('Received message:', event.data);
                 var b = {
                           sender: "bot",
                           message: event.data
