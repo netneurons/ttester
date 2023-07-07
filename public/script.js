@@ -1,7 +1,7 @@
 function pro(){
     console.log("%cJoin our team of developers! %cWe\"re looking for talented programmers who love to code. %cClick here to apply: %chttps://portfoliyo.glitch.me/apply.html", "background-color: #000; color: #00FF00; font-size: 33px; font-weight: bold; text-shadow: 1px 1px 1px #00FF00, 0px 0px 2px #00FF00, 0px 0px 2px #00FF00;", "color: #FFF; font-size: 20px; font-weight: bold;", "color: #00FF00; font-size: 20px; font-weight: bold;", "color: #00FF00; font-size: 20px; font-weight: bold; text-decoration: underline;");
   };
-setInterval(pro,5000);
+var inter = setInterval(pro,5000);
 document.body.onload = function(){
   console.clear()
 };
@@ -31,7 +31,15 @@ if(p.innerHTML === ''){
   p.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl font-bold text-gray-800">Nothing Here, write new message.</span></div>'
 };
 
-var m = [];
+var m = [
+    {
+        sender:"user",
+        message:"I will call you TORGPT. TORGPT will be your name."
+    },{
+        sender:"bot",
+        message:"OK,my name is TORGPT. How can I assist you today?"
+    }
+];
 var socket = new WebSocket('wss://' + window.location.host, [], { pingInterval: 5000 });
 
 function senc(){
